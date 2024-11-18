@@ -7,8 +7,11 @@ namespace WebShop.Controllers
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
-        public ProductController()
+
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         // Endpoint för att hämta alla produkter
@@ -16,20 +19,41 @@ namespace WebShop.Controllers
         public ActionResult<IEnumerable<Product>> GetProducts()
         {
             // Behöver använda repository via Unit of Work för att hämta produkter
-            return Ok();
+
+            var products = _unitOfWork.ProductRepository.GetAllAsync();
+
+            return Ok(products);
         }
 
         // Endpoint för att lägga till en ny produkt
         [HttpPost]
-        public ActionResult AddProduct(Product product)
+        public ActionResult AddProduct([FromBody]Product product)
         {
-            // Lägger till produkten via repository
+	        if (product == null)
+	        {
+		        return BadRequest("Product is null");
+	        }
 
-            // Sparar förändringar
+	        // Lägger till produkten via repository
 
-            // Notifierar observatörer om att en ny produkt har lagts till
+			try
+			{
+		        _unitOfWork.ProductRepository.AddAsync(product);
 
-            return Ok();
+		        // Sparar förändringar
+
+				_unitOfWork.SaveChangesAsync();
+
+		        return Ok("Product added successfully");
+	        }
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Internal server error: {ex.Message}");
+			}
+	        
+			// Notifierar observatörer om att en ny produkt har lagts till
+
+			
         }
     }
 }

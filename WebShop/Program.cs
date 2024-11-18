@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using WebShop.Notifications;
 using WebShop.Repositories;
 using WebShop.UnitOfWork;
+using WebShopSolution.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,11 @@ builder.Services.AddTransient<INotificationObserver, EmailNotification>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<WebShopSolutionDbContext>(options =>
+	options.UseSqlServer(connectionString));
 
 var app = builder.Build();
 
