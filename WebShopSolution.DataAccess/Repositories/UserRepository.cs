@@ -22,17 +22,62 @@ public class UserRepository(WebShopSolutionDbContext context) : IUserRepository
 
 	public async Task AddAsync(User entity)
 	{
+
+		var newUser = new User
+		{
+			UserName = entity.UserName,
+			Password = entity.Password,
+			FirstName = entity.FirstName,
+			LastName = entity.LastName,
+			Email = entity.Email,
+			PhoneNumber = entity.PhoneNumber,
+			StreetAddress = entity.StreetAddress,
+			City = entity.City,
+			ZipCode = entity.ZipCode,
+			Country = entity.Country,
+			IsAdmin = entity.IsAdmin,
+			IsActive = entity.IsActive,
+			Orders = null
+		};
+
 		await context.Users.AddAsync(entity);
 
 	}
 
 	public async Task UpdateAsync(User entity, int id)
 	{
-		throw new NotImplementedException();
+		var userToUpdate = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+		if (userToUpdate is null)
+		{
+			return;
+		}
+
+		userToUpdate.UserName = entity.UserName;
+		userToUpdate.Password = entity.Password;
+		userToUpdate.FirstName = entity.FirstName;
+		userToUpdate.LastName = entity.LastName;
+		userToUpdate.Email = entity.Email;
+		userToUpdate.PhoneNumber = entity.PhoneNumber;
+		userToUpdate.StreetAddress = entity.StreetAddress;
+		userToUpdate.City = entity.City;
+		userToUpdate.ZipCode = entity.ZipCode;
+		userToUpdate.Country = entity.Country;
+		userToUpdate.IsAdmin = entity.IsAdmin;
+		userToUpdate.IsActive = entity.IsActive;
+		userToUpdate.Orders = entity.Orders;
+
 	}
 
 	public async Task DeleteAsync(int id)
 	{
-		throw new NotImplementedException();
+		var userToDelete = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+		if (userToDelete is null)
+		{
+			return;
+		}
+
+		context.Users.Remove(userToDelete);
 	}
 }

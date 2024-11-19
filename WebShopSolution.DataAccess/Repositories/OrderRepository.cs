@@ -1,32 +1,69 @@
-﻿using WebShop;
+﻿using Microsoft.EntityFrameworkCore;
+using WebShop;
 using WebShopSolution.DataAccess.RepositoryInterfaces;
 
 namespace WebShopSolution.DataAccess.Repositories;
 
-public class OrderRepository : IOrderRepository
+public class OrderRepository(WebShopSolutionDbContext context) : IOrderRepository
 {
 	public async Task<Order> GetByIdAsync(int id)
 	{
-		throw new NotImplementedException();
+		var order = context.Orders.FirstOrDefault(o => o.Id == id);
+
+		return order;
 	}
 
 	public async Task<IEnumerable<Order>> GetAllAsync()
 	{
-		throw new NotImplementedException();
+		var orders = await context.Orders.ToListAsync();
+
+		return orders;
 	}
 
 	public async Task AddAsync(Order entity)
 	{
-		throw new NotImplementedException();
+		var newOrder = new Order
+		{
+			OrderDate = entity.OrderDate,
+			TotalPrice = entity.TotalPrice,
+			OrderProducts = entity.OrderProducts,
+			IsActive = entity.IsActive,
+			UserId = entity.UserId,
+			User = entity.User
+		};
+
+		context.Orders.Add(newOrder);
+
+
 	}
 
 	public async Task UpdateAsync(Order entity, int id)
 	{
-		throw new NotImplementedException();
+		var orderToUpdate = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+
+		if (orderToUpdate is null)
+		{
+			return;
+		}
+
+		orderToUpdate.OrderDate = entity.OrderDate;
+		orderToUpdate.TotalPrice = entity.TotalPrice;
+		orderToUpdate.OrderProducts = entity.OrderProducts;
+		orderToUpdate.IsActive = entity.IsActive;
+		orderToUpdate.UserId = entity.UserId;
+		orderToUpdate.User = entity.User;
+
 	}
 
 	public async Task DeleteAsync(int id)
 	{
-		throw new NotImplementedException();
+		var orderToDelete = await context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+
+		if (orderToDelete is null)
+		{
+			return;
+		}
+
+		context.Orders.Remove(orderToDelete);
 	}
 }
