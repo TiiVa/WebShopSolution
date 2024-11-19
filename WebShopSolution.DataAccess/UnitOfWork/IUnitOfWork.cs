@@ -1,6 +1,7 @@
-﻿using WebShop.Repositories;
+﻿using WebShop;
+using WebShop.Repositories;
 
-namespace WebShop.UnitOfWork
+namespace WebShopSolution.DataAccess.UnitOfWork
 {
     // Gränssnitt för Unit of Work
     public interface IUnitOfWork : IDisposable

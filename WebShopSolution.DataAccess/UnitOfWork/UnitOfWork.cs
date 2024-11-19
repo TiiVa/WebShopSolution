@@ -1,15 +1,16 @@
-﻿using WebShop.Notifications;
+﻿using WebShop;
 using WebShop.Repositories;
-using WebShopSolution.DataAccess;
+using WebShopSolution.DataAccess.Notifications;
 using WebShopSolution.DataAccess.Repositories;
 
-namespace WebShop.UnitOfWork
+namespace WebShopSolution.DataAccess.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         // Hämta produkter från repository
         public IProductRepository Products { get; private set; }
         private readonly WebShopSolutionDbContext _context;
+        
 
         public IProductRepository ProductRepository
         {
@@ -17,7 +18,7 @@ namespace WebShop.UnitOfWork
 	        {
 		        if (Products == null)
 		        {
-			        Products = new ProductRepository();
+			        Products = new ProductRepository(_context);
 		        }
 
                 return Products;
@@ -26,7 +27,7 @@ namespace WebShop.UnitOfWork
 		private readonly ProductSubject _productSubject;
 
         // Konstruktor används för tillfället av Observer pattern
-        public UnitOfWork(WebShopSolutionDbContext context, ProductSubject productSubject = null)
+        public UnitOfWork(WebShopSolutionDbContext context, ProductSubject productSubject)
         {
             Products = null;
 

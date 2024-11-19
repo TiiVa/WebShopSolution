@@ -7,7 +7,7 @@ namespace WebShop
         public string Name { get; set; } // Namn på produkten
         public string Description { get; set; }
         public double Price { get; set; }
-        public int Stock { get; set; } // TODO: Gör migration för att få med denna i DB
+        public int Stock { get; set; }
         
 	}
 }

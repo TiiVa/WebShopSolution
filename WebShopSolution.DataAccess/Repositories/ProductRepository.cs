@@ -3,21 +3,34 @@ using WebShop.Repositories;
 
 namespace WebShopSolution.DataAccess.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(WebShopSolutionDbContext context) : IProductRepository
 {
 	public async Task<Product> GetByIdAsync(int id)
 	{
-		throw new NotImplementedException();
+		var product = context.Products.FirstOrDefault(p => p.Id == id);
+
+		return product;
 	}
 
 	public async Task<IEnumerable<Product>> GetAllAsync()
 	{
-		throw new NotImplementedException();
+		var products = context.Products.ToList();
+
+		return products;
 	}
 
 	public async Task AddAsync(Product entity)
 	{
-		throw new NotImplementedException();
+		var newProduct = new Product
+		{
+
+			Name = entity.Name,
+			Description = entity.Description,
+			Price = entity.Price,
+			Stock = entity.Stock
+		};
+
+		await context.Products.AddAsync(newProduct);
 	}
 
 	public async Task UpdateAsync(Product entity, int id)

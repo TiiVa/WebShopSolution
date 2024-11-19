@@ -1,4 +1,6 @@
-﻿namespace WebShop.Notifications
+﻿using WebShop;
+
+namespace WebShopSolution.DataAccess.Notifications
 {
     // Gränssnitt för notifieringsobservatörer enligt Observer Pattern
     public interface INotificationObserver

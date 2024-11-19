@@ -1,4 +1,6 @@
-﻿namespace WebShop.Notifications
+﻿using WebShop;
+
+namespace WebShopSolution.DataAccess.Notifications
 {
     // Subject som håller reda på observatörer och notifierar dem
     public class ProductSubject
