@@ -1,5 +1,6 @@
 ﻿using WebShop;
 using WebShop.Repositories;
+using WebShopSolution.DataAccess.RepositoryInterfaces;
 
 namespace WebShopSolution.DataAccess.UnitOfWork
 {
@@ -8,8 +9,11 @@ namespace WebShopSolution.DataAccess.UnitOfWork
     {
          // Repository för produkter
          IProductRepository ProductRepository { get; }
+         IUserRepository UserRepository { get; }
+         IOrderRepository OrderRepository { get; }
 
-         Task SaveChangesAsync();
+
+		Task SaveChangesAsync();
          
          // Sparar förändringar (om du använder en databas)
         void NotifyProductAdded(Product product); // Notifierar observatörer om ny produkt

@@ -8,14 +8,14 @@ public class UserRepository(WebShopSolutionDbContext context) : IUserRepository
 {
 	public async Task<User> GetByIdAsync(int id)
 	{
-		var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+		var user = context.Users.FirstOrDefault(u => u.Id == id);
 
 		return user;
 	}
 
 	public async Task<IEnumerable<User>> GetAllAsync()
 	{
-		var users = await context.Users.ToListAsync();
+		var users = context.Users.ToList();
 
 		return users;
 	}
@@ -37,10 +37,10 @@ public class UserRepository(WebShopSolutionDbContext context) : IUserRepository
 			Country = entity.Country,
 			IsAdmin = entity.IsAdmin,
 			IsActive = entity.IsActive,
-			Orders = null
+			Orders = new List<Order>()
 		};
 
-		await context.Users.AddAsync(entity);
+		await context.Users.AddAsync(newUser);
 
 	}
 
@@ -67,6 +67,7 @@ public class UserRepository(WebShopSolutionDbContext context) : IUserRepository
 		userToUpdate.IsActive = entity.IsActive;
 		userToUpdate.Orders = entity.Orders;
 
+		
 	}
 
 	public async Task DeleteAsync(int id)
