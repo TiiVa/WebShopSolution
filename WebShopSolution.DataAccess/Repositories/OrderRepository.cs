@@ -15,7 +15,9 @@ public class OrderRepository(WebShopSolutionDbContext context) : IOrderRepositor
 
 	public async Task<IEnumerable<Order>> GetAllAsync()
 	{
-		var orders = await context.Orders.ToListAsync();
+		var orders = await context.Orders
+			.Include(o => o.User)
+			.Include(o => o.OrderProducts).ToListAsync();
 
 		return orders;
 	}

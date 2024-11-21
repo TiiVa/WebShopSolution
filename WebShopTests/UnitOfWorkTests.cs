@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using WebShop;
 using WebShopSolution.DataAccess;
 using WebShopSolution.DataAccess.Notifications;
 
-namespace WebShop.Tests
+namespace WebShopTests
 {
     public class UnitOfWorkTests
     {
