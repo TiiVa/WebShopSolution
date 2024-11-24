@@ -6,7 +6,7 @@ using WebShopSolution.DataAccess.RepositoryInterfaces;
 
 namespace WebShopSolution.DataAccess.UnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         // Hämta produkter från repository
         public IProductRepository Products { get; private set; }
@@ -70,9 +70,10 @@ namespace WebShopSolution.DataAccess.UnitOfWork
 
             // Registrera standardobservatörer
             _productSubject.Attach(new EmailNotification());
-        }
+			_productSubject.Attach(new SmsNotification());
+		}
 
-        public async Task SaveChangesAsync()
+        public async Task CommitAsync()
         {
 	        await _context.SaveChangesAsync();
         }
@@ -81,8 +82,6 @@ namespace WebShopSolution.DataAccess.UnitOfWork
         {
             _context.Dispose();
         }
-
-       
 
         public void NotifyProductAdded(Product product)
         {

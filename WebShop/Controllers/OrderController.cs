@@ -42,7 +42,7 @@ namespace WebShop.Controllers
 			{
 				await _unitOfWork.OrderRepository.AddAsync(order);
 
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 				return Ok("Order added successfully");
 			}
@@ -64,7 +64,7 @@ namespace WebShop.Controllers
 			{
 				await _unitOfWork.OrderRepository.UpdateAsync(order, id);
 
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 				return Ok("Order updated successfully");
 			}
@@ -81,7 +81,7 @@ namespace WebShop.Controllers
 			{
 				await _unitOfWork.OrderRepository.DeleteAsync(id);
 
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 				return Ok("Order deleted successfully");
 			}

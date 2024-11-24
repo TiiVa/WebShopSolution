@@ -10,7 +10,7 @@ namespace WebShopTests;
 public class OrderCrudTests
 {
 	[Fact]
-	public void GetAllOrders_ReturnsOkResult()
+	public async Task GetAllOrders_ReturnsOkResult()
 	{
 		// Arrange
 		var orderRepository = A.Fake<IOrderRepository>();
@@ -18,16 +18,17 @@ public class OrderCrudTests
 		var controller = new OrderController(unitOfWork);
 
 		// Act
-		var result = controller.GetAllOrders();
+		var result = await controller.GetAllOrders();
 
 		// Assert
+		
 		Assert.NotNull(result);
 		A.CallTo(() => unitOfWork.OrderRepository).Returns(orderRepository);
 		A.CallTo(() => orderRepository.GetAllAsync()).Returns(Task.FromResult<IEnumerable<Order>>(new List<Order>()));
 	}
 
 	[Fact]
-	public void GetOrderById_ReturnsOkResult()
+	public void GetOrderById_ReturnsOkResultAndObject() // TODO: Kolla om detta är SRP
 	{
 		// Arrange
 		var orderRepository = A.Fake<IOrderRepository>();
@@ -47,6 +48,7 @@ public class OrderCrudTests
 		var result = controller.GetOrderById(1);
 
 		// Assert
+		A.CallTo(() => orderRepository.GetByIdAsync(1)).Returns(order);
 		Assert.NotNull(result);
 		A.CallTo(() => unitOfWork.OrderRepository).Returns(orderRepository);
 		A.CallTo(() => orderRepository.GetByIdAsync(A<int>.Ignored)).Returns(Task.FromResult(order));

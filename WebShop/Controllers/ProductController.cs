@@ -16,9 +16,9 @@ namespace WebShop.Controllers
 
        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public IActionResult GetProducts()
         {
-            var products = await _unitOfWork.ProductRepository.GetAllAsync();
+            var products = _unitOfWork.ProductRepository.GetAllAsync();
 
             return Ok(products);
         }
@@ -48,7 +48,7 @@ namespace WebShop.Controllers
 			{
 		       await  _unitOfWork.ProductRepository.AddAsync(product);
 
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 		        return Ok("Product added successfully");
 	        }
@@ -72,7 +72,7 @@ namespace WebShop.Controllers
 			{
 				await _unitOfWork.ProductRepository.UpdateAsync(product, id);
 				
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 				return Ok("Product updated successfully");
 			}
@@ -91,7 +91,7 @@ namespace WebShop.Controllers
 			{
 				await _unitOfWork.ProductRepository.DeleteAsync(id);
 				
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 				return Ok("Product deleted successfully");
 			}

@@ -44,7 +44,7 @@ namespace WebShop.Controllers
 			{
 				await _unitOfWork.UserRepository.AddAsync(user);
 
-				await _unitOfWork.SaveChangesAsync();
+				await _unitOfWork.CommitAsync();
 
 				return Ok("User added successfully");
 			}
@@ -70,7 +70,7 @@ namespace WebShop.Controllers
 				}
 				await _unitOfWork.UserRepository.UpdateAsync(user, id);
 
-			    await _unitOfWork.SaveChangesAsync();
+			    await _unitOfWork.CommitAsync();
 
 				return Ok("User updated successfully");
 			}
@@ -91,7 +91,7 @@ namespace WebShop.Controllers
 			}
 			await _unitOfWork.UserRepository.DeleteAsync(id);
 
-			await _unitOfWork.SaveChangesAsync();
+			await _unitOfWork.CommitAsync();
 
 			return Ok("User deleted successfully");
 		}

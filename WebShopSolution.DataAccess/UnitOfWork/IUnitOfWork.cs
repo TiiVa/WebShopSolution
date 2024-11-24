@@ -13,7 +13,8 @@ namespace WebShopSolution.DataAccess.UnitOfWork
          IOrderRepository OrderRepository { get; }
 
 
-		Task SaveChangesAsync();
+		Task CommitAsync();
+
          
          // Sparar förändringar (om du använder en databas)
         void NotifyProductAdded(Product product); // Notifierar observatörer om ny produkt
