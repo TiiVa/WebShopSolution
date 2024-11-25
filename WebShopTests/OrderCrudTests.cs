@@ -35,6 +35,7 @@ public class OrderCrudTests
 		var unitOfWork = A.Fake<IUnitOfWork>();
 		var controller = new OrderController(unitOfWork);
 
+		int id = 1;
 		var order = new Order
 		{
 			Id = 1,
@@ -48,6 +49,7 @@ public class OrderCrudTests
 		var result = controller.GetOrderById(1);
 
 		// Assert
+		Assert.Equal(order.Id, id);
 		A.CallTo(() => orderRepository.GetByIdAsync(1)).Returns(order);
 		Assert.NotNull(result);
 		A.CallTo(() => unitOfWork.OrderRepository).Returns(orderRepository);

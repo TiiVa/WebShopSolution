@@ -11,6 +11,7 @@ public static class DependencyInjection
 		
 		services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 		services.AddTransient<INotificationObserver, EmailNotification>();
+		services.AddTransient<INotificationObserver, SmsNotification>(); // TODO: Add this line?
 		services.AddScoped<ProductSubject>();
 
 		return services;

@@ -35,6 +35,8 @@ public class ProductCrudTests
 		var productRepository = A.Fake<IProductRepository>();
 		var unitOfWork = A.Fake<IUnitOfWork>();
 		var controller = new ProductController(unitOfWork);
+
+		int id = 1;
 		var product = new Product
 		{
 			Id = 1,
@@ -49,6 +51,7 @@ public class ProductCrudTests
 
 		// Assert
 		Assert.NotNull(result);
+		Assert.Equal(product.Id, id);
 		A.CallTo(() => unitOfWork.ProductRepository).Returns(productRepository);
 		A.CallTo(() => productRepository.GetByIdAsync(A<int>.Ignored)).Returns(Task.FromResult(product));
 	}
