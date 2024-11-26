@@ -3,7 +3,7 @@ WORKDIR /src
 
 # Copy everything
 COPY ["WebShop/WebShop.csproj", "./WebShop/"]
-COPY ["WebShopSolution.DataAccess.csproj", "./WebShopSolution.DataAccess/"]
+COPY ["WebShopSolution.DataAccess/WebShopSolution.DataAccess.csproj", "./WebShopSolution.DataAccess/"]
 COPY ["WebShopTests/WebShopTests.csproj", "./WebShopTests/"]
 
 # Restore dependencies
@@ -32,3 +32,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "WebShop.dll"]
+

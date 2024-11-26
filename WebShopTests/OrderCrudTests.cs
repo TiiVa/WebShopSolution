@@ -46,7 +46,7 @@ public class OrderCrudTests
 		};
 
 		// Act
-		var result = controller.GetOrderById(1);
+		var result = controller.GetOrderById(order.Id);
 
 		// Assert
 		Assert.Equal(order.Id, id);

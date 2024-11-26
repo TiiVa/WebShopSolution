@@ -9,10 +9,12 @@ namespace WebShop.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        
+
+		public ProductController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }
+		}
 
        
         [HttpGet]
