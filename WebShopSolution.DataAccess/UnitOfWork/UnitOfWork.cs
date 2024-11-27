@@ -55,7 +55,7 @@ namespace WebShopSolution.DataAccess.UnitOfWork
 	        }
         }
 
-        // Konstruktor används för tillfället av Observer pattern
+        
         public UnitOfWork(WebShopSolutionDbContext context, IProductRepository productRepository, IUserRepository userRepository, IOrderRepository orderRepository, ProductSubject productSubject)
         {
             Products = productRepository;

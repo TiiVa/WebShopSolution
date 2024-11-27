@@ -12,6 +12,7 @@ public class OrderRepositoryTests
 	{
 		// Arrange
 		var orderRepository = A.Fake<IOrderRepository>();
+
 		var order = new Order
 		{
 			Id = 1,
@@ -32,10 +33,13 @@ public class OrderRepositoryTests
 			IsActive = true
 
 		};
+
 		A.CallTo(() => orderRepository.GetByIdAsync(order.Id))
 			.Returns(Task.FromResult(order));
+
 		// Act
 		var result = await orderRepository.GetByIdAsync(order.Id);
+
 		// Assert
 		Assert.NotNull(result);
 		Assert.Equal(order.Id, result.Id);

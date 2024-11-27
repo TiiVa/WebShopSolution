@@ -8,10 +8,10 @@ public class OrderRepository(WebShopSolutionDbContext context) : IOrderRepositor
 {
 	public async Task<Order> GetByIdAsync(int id)
 	{
-		var order = context.Orders
+		var order = await context.Orders
 			.Include(o => o.User)
 			.Include(op => op.OrderProducts)
-			.FirstOrDefault(o => o.Id == id);
+			.FirstOrDefaultAsync(o => o.Id == id);
 
 		if(order is null)
 		{
