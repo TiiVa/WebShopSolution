@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using WebShop;
+using WebShop.Repositories;
 using WebShopSolution.DataAccess;
 using WebShopSolution.DataAccess.Notifications;
+using WebShopSolution.DataAccess.RepositoryInterfaces;
 using WebShopSolution.DataAccess.UnitOfWork;
 
 namespace WebShopTests
@@ -13,34 +15,32 @@ namespace WebShopTests
 		public void NotifyProductAdded_CallsObserverUpdate()
 		{
 			// Arrange
-			var product = new Product { Id = 1, Name = "Test" };
-
-			// Skapar en mock av INotificationObserver
+			var mockProductRepository = new Mock<IProductRepository>();
+			var mockOrderRepository = new Mock<IOrderRepository>();
+			var mockUserRepository = new Mock<IUserRepository>();
 			var mockObserver = new Mock<INotificationObserver>();
 
-			var dbContextOptions = new DbContextOptionsBuilder<WebShopSolutionDbContext>()
-			 .UseInMemoryDatabase(databaseName: "TestDb")
-			 .Options;
-
-			var dbContext = new WebShopSolutionDbContext(dbContextOptions);
-
-			// Skapar en instans av ProductSubject och lägger till mock-observatören
+			// Set up the ProductSubject and attach the observer
 			var productSubject = new ProductSubject();
 			productSubject.Attach(mockObserver.Object);
 
-			// Injicerar vårt eget ProductSubject i UnitOfWork
+			// Create a UnitOfWork instance
+			var unitOfWork = new UnitOfWork(context : null,
+				productRepository: mockProductRepository.Object,
+				userRepository: mockUserRepository.Object,
+				orderRepository: mockOrderRepository.Object,
+				productSubject: productSubject);
 
-			var unitOfWork = new UnitOfWork(dbContext, productSubject);
-
+			var product = new Product { Id = 1, Name = "Test" };
 
 			// Act
 			unitOfWork.NotifyProductAdded(product);
 
 			// Assert
-			// Verifierar att Update-metoden kallades på vår mock-observatör
 			mockObserver.Verify(o => o.Update(product), Times.Once);
 		}
 	}
+
 
 
 }

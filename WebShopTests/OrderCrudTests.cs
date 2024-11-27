@@ -28,7 +28,7 @@ public class OrderCrudTests
 	}
 
 	[Fact]
-	public void GetOrderById_ReturnsOkResultAndObject() // TODO: Kolla om detta är SRP
+	public void GetOrderById_ReturnsOkResultAndObject()
 	{
 		// Arrange
 		var orderRepository = A.Fake<IOrderRepository>();
@@ -142,7 +142,7 @@ public class OrderCrudTests
 		};
 		
 		// Act
-		var result = controller.DeleteOrder(1);
+		var result = controller.DeleteOrder(order.Id);
 		
 		// Assert
 		Assert.NotNull(result);

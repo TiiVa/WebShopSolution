@@ -12,7 +12,7 @@ namespace WebShopSolution.DataAccess.UnitOfWork
         public IProductRepository Products { get; private set; }
         public IUserRepository _userRepository { get; private set; }
         public IOrderRepository _orderRepository { get; private set; }
-
+        private readonly ProductSubject _productSubject;
 		private readonly WebShopSolutionDbContext _context;
         
 
@@ -55,15 +55,13 @@ namespace WebShopSolution.DataAccess.UnitOfWork
 	        }
         }
 
-
-        private readonly ProductSubject _productSubject;
-
         // Konstruktor används för tillfället av Observer pattern
-        public UnitOfWork(WebShopSolutionDbContext context, ProductSubject productSubject)
+        public UnitOfWork(WebShopSolutionDbContext context, IProductRepository productRepository, IUserRepository userRepository, IOrderRepository orderRepository, ProductSubject productSubject)
         {
-            Products = null;
-
-            _context = context;
+            Products = productRepository;
+			_userRepository = userRepository;
+			_orderRepository = orderRepository;
+			_context = context;
 
             // Om inget ProductSubject injiceras, skapa ett nytt
             _productSubject = productSubject ?? new ProductSubject();

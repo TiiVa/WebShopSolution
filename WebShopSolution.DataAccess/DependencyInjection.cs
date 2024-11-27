@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using WebShop.Repositories;
 using WebShopSolution.DataAccess.Notifications;
+using WebShopSolution.DataAccess.Repositories;
+using WebShopSolution.DataAccess.RepositoryInterfaces;
 using WebShopSolution.DataAccess.UnitOfWork;
 
 namespace WebShopSolution.DataAccess;
@@ -10,8 +13,11 @@ public static class DependencyInjection
 	{
 		
 		services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+		services.AddScoped<IProductRepository, ProductRepository>();
+		services.AddScoped<IUserRepository, UserRepository>();
+		services.AddScoped<IOrderRepository, OrderRepository>();
 		services.AddTransient<INotificationObserver, EmailNotification>();
-		services.AddTransient<INotificationObserver, SmsNotification>(); // TODO: Add this line?
+		services.AddTransient<INotificationObserver, SmsNotification>();
 		services.AddScoped<ProductSubject>();
 
 		return services;
