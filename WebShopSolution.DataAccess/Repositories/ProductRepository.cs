@@ -8,7 +8,13 @@ public class ProductRepository(WebShopSolutionDbContext context) : IProductRepos
 {
 	public async Task<Product> GetByIdAsync(int id)
 	{
+
 		var product = context.Products.FirstOrDefault(p => p.Id == id);
+
+		if (product == null)
+		{
+			return new Product();
+		}
 
 		return product;
 	}

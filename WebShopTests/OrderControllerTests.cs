@@ -7,7 +7,7 @@ using WebShopSolution.DataAccess.UnitOfWork;
 
 namespace WebShopTests;
 
-public class OrderCrudTests
+public class OrderControllerTests
 {
 	[Fact]
 	public async Task GetAllOrders_ReturnsOkResult()

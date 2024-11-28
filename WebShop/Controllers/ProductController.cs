@@ -30,10 +30,11 @@ namespace WebShop.Controllers
 		{
 			var product = await _unitOfWork.ProductRepository.GetByIdAsync(id);
 
-			if (product is null)
+			if (product.Id == 0)
 			{
 				return NotFound($"No product with id {id}");
 			}
+
 			return Ok(product);
 		}
 
@@ -41,7 +42,7 @@ namespace WebShop.Controllers
 		[HttpPost]
         public async Task<ActionResult> AddProduct([FromBody]Product product)
         {
-	        if (product is null)
+	        if (product.Name == string.Empty || product.Price <= 0 || product.Stock <= 0)
 	        {
 		        return BadRequest("Product is null");
 	        }

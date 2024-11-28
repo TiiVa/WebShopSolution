@@ -6,7 +6,7 @@ using WebShopSolution.DataAccess.UnitOfWork;
 
 namespace WebShopTests;
 
-public class UserCrudTests
+public class UserControllerTests
 {
 	[Fact]
 	public void GetAllUsers_ReturnsOkResult()
