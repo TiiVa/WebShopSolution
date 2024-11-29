@@ -20,6 +20,8 @@ public static class DependencyInjection
 		services.AddTransient<INotificationObserver, SmsNotification>();
 		services.AddScoped<ProductSubject>();
 
+		// Logger som implementeras i repona
+
 		return services;
 	}
 }

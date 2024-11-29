@@ -9,35 +9,23 @@ public class ProductRepository(WebShopSolutionDbContext context) : IProductRepos
 	public async Task<Product> GetByIdAsync(int id)
 	{
 
-		var product = context.Products.FirstOrDefault(p => p.Id == id);
-
-		if (product == null)
-		{
-			return new Product();
-		}
+		var product = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
 		return product;
+
+		// ev try catch här
 	}
 
 	public async Task<IEnumerable<Product>> GetAllAsync()
 	{
-		var products = context.Products.ToList();
+		var products = await context.Products.ToListAsync();
 
 		return products;
 	}
 
 	public async Task AddAsync(Product entity)
 	{
-		var newProduct = new Product
-		{
-
-			Name = entity.Name,
-			Description = entity.Description,
-			Price = entity.Price,
-			Stock = entity.Stock
-		};
-
-		await context.Products.AddAsync(newProduct);
+		await context.Products.AddAsync(entity);
 	}
 
 	public async Task UpdateAsync(Product entity, int id)
@@ -46,7 +34,7 @@ public class ProductRepository(WebShopSolutionDbContext context) : IProductRepos
 
 		if (productToUpdate is null)
 		{
-			return;
+			return; // try cath om null returna null
 		}
 
 		productToUpdate.Name = entity.Name;

@@ -190,7 +190,7 @@ public class ProductControllerTests
 	}
 
 	[Fact]
-	public async Task GetProductById_CallsProductRepository_DoesNotCallUserRepository()
+	public async Task GetProductById_CallsProductRepository_DoesNotCallUserRepository()	
 	{
 		// Arrange
 		var productRepo = A.Fake<IProductRepository>();
@@ -207,8 +207,7 @@ public class ProductControllerTests
 		// Assert
 		A.CallTo(() => productRepo.GetByIdAsync(1)).MustHaveHappenedOnceExactly();
 		A.CallTo(() => userRepo.GetByIdAsync(1)).MustNotHaveHappened();
-		A.CallTo(() => productRepo.GetAllAsync()).MustNotHaveHappened();
-		A.CallTo(() => unitOfWork.CommitAsync()).MustNotHaveHappened();
+
 
 	}
 

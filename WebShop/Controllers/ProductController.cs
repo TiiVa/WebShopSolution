@@ -18,9 +18,9 @@ namespace WebShop.Controllers
 
        
         [HttpGet]
-        public IActionResult GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var products = _unitOfWork.ProductRepository.GetAllAsync();
+            var products = await _unitOfWork.ProductRepository.GetAllAsync();
 
             return Ok(products);
         }
@@ -30,7 +30,7 @@ namespace WebShop.Controllers
 		{
 			var product = await _unitOfWork.ProductRepository.GetByIdAsync(id);
 
-			if (product.Id == 0)
+			if (product is null)
 			{
 				return NotFound($"No product with id {id}");
 			}

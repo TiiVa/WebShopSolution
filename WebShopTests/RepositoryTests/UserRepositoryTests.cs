@@ -93,16 +93,12 @@ public class UserRepositoryTests
 
 		var resultList = result.ToList();
 		Assert.Equal(users.Count, resultList.Count);
-
 		Assert.Equal(users[0].Id, resultList[0].Id);
 		Assert.Equal(users[0].UserName, resultList[0].UserName);
 		Assert.Equal(users[0].Email, resultList[0].Email);
-
-
 		Assert.Equal(users[1].Id, resultList[1].Id);
 		Assert.Equal(users[1].UserName, resultList[1].UserName);
 		Assert.Equal(users[1].Email, resultList[1].Email);
-
 
 		A.CallTo(() => userRepository.GetAllAsync())
 			.MustHaveHappenedOnceExactly();
